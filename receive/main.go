@@ -69,13 +69,13 @@ func handleSendResponse(w http.ResponseWriter, r *http.Request) {
 		message,
 	})
 	if err != nil {
-		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-	} else {
-		// w.Header().Set("Content-Type", "application/xml")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(twimlResult))
 	}
+
+	w.Header().Set("Content-Type", "application/xml")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(twimlResult))
 }
 
 func main() {
