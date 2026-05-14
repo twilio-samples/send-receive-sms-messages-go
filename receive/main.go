@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
@@ -18,7 +17,7 @@ func handleNoResponse(w http.ResponseWriter, r *http.Request) {
 	twimlResult, err := twiml.Messages([]twiml.Element{
 		&twiml.MessagingMessage{},
 	})
-	fmt.Println("Sending response without a body.")
+	log.Println("Sending response without a body.")
 	if err != nil {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		w.Write([]byte(err.Error()))
@@ -44,8 +43,8 @@ func handleSendResponse(w http.ResponseWriter, r *http.Request) {
 
 	body := r.PostForm.Get("Body")
 
-	fmt.Printf("Request received with body: \"%s\"\n", body)
-	fmt.Println("Sending response with a body.")
+	log.Printf("Request received with body: \"%s\"\n", body)
+	log.Println("Sending response with a body.")
 
 	const defaultResponse = "I just wanna tell you how I'm feeling - Gotta make you understand"
 	options := [6]string{
