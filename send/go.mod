@@ -1,4 +1,4 @@
-module github.com/settermjd/send-receive-sms-messages-go/send
+module github.com/twilio-samples/send-receive-sms-messages-go/send
 
 go 1.25.1
 
