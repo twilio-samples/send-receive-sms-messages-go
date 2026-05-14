@@ -60,7 +60,7 @@ func handleSendResponse(w http.ResponseWriter, r *http.Request) {
 
 	message := &twiml.MessagingMessage{}
 	if strings.ToLower(body) == "never gonna" {
-		message.Body = options[rand.Intn(len(options)-1)]
+		message.Body = options[rand.Intn(len(options))]
 	} else {
 		message.Body = defaultResponse
 	}
