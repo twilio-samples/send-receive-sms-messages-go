@@ -19,26 +19,28 @@ func handleNoResponse(w http.ResponseWriter, r *http.Request) {
 	})
 	log.Println("Sending response without a body.")
 	if err != nil {
-		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-	} else {
-		// w.Header().Set("Content-Type", "application/xml")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(twimlResult))
+		return
 	}
+
+	w.Header().Set("Content-Type", "application/xml")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(twimlResult))
 }
 
 // Handle requests where a response is sent back to Twilio, instructing it to
 // send a reply SMS to the sender of the original SMS.
 //
-// If the response body is "never gonna", regarless of case, then a response,
+// If the response body is "never gonna", regardless of case, then a response,
 // based on "Never Gonna Give You Up" by Rick Astley, will be sent as the body
 // of the SMS.
 func handleSendResponse(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
+		return
 	}
 
 	body := r.PostForm.Get("Body")
